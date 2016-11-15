@@ -1,0 +1,211 @@
+{
+    "scopeName": "source.jai",
+    "name": "Jai",
+    "fileTypes": [
+        "jai"
+    ],
+    "foldingStartMarker": "^\\s*/\\*|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))",
+    "foldingStopMarker": "^\\s*\\*/|^\\s*\\}",
+    "patterns": [
+        {
+            "include": "#code"
+        }
+    ],
+    "repository": {
+
+        "code": {
+            "patterns": [
+                {
+                    "include": "#block"
+                },
+                {
+                    "include": "#comments"
+                },
+                {
+                    "include": "#procedure_declaration"
+                },
+                {
+                    "include": "#struct_declaration"
+                },
+                {
+                    "include": "#enum_declaration"
+                },
+                {
+                    "include": "#variable_declaration"
+                },
+                {
+                    "include": "#literals"
+                },
+                {
+                    "include": "#keywords"
+                },
+                {
+                    "include": "#preprocessor"
+                },
+                {
+                    "include": "#procedure-call"
+                }
+            ]
+        },
+        "block": {
+            "begin": "{",
+            "beginCaptures": {
+                "0": {
+                    "name": "punctuation.section.block.begin.jai"
+                }
+            },
+            "end": "}",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.section.block.end.jai"
+                }
+            },
+            "name": "meta.block.jai",
+            "patterns": [
+                {
+                    "include": "#code"
+                }
+            ]
+        },
+        "comments": {
+            "patterns": [
+                {
+                    "begin": "/\\*",
+                    "captures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.jai"
+                        }
+                    },
+                    "end": "\\*/\\n?",
+                    "name": "comment.block.jai"
+                },
+                {
+                    "begin": "//",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.comment.jai"
+                        }
+                    },
+                    "end": "$\\n?",
+                    "name": "comment.line.double-slash.jai"
+                }
+            ]
+        },
+        "procedure_declaration": {
+
+        },
+        "struct_declaration": {
+            "begin": "\\s*([a-zA-Z_]\\w*)\\s*:(\\.*):\\s*(struct|SOA\\s*struct|AOS\\s*struct)\\s*{",
+            "beginCaptures": {
+                "1": {
+                    "name": "entity.name.type.jai"
+                },
+                "2": {
+                    "patterns":[
+                        {
+                            "include": "#type"
+                        }
+                    ]
+                },
+                "3": {
+                    "name": "storage.modifier.jai"
+                }
+            },
+            "end": "}",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.section.struct.end.jai"
+                }
+            },
+            "name": "meta.struct.jai",
+            "patterns": [
+                {
+                    "include": "#variable_declaration"
+                },
+                {
+                    "include": "#struct_declaration"
+                },
+                {
+                    "include": "#enum_declaration"
+                }
+            ]
+        },
+        "enum_declaration": {
+            "begin": "\\s*([a-zA-Z_]\\w*)\\s*:\\s*:\\s*(enum)\\s*{",
+            "beginCaptures": {
+                "1": {
+                    "name": "entity.name.type.jai"
+                },
+                "2": {
+                    "name": "storage.modifier.jai"
+                }
+            },
+            "end": "}",
+            "endCaptures": {
+                "0": {
+                    "name": "punctuation.section.enum.end.jai"
+                }
+            },
+            "name": "meta.enum.jai",
+            "patterns": [
+                {
+                    "include": "#literals"
+                }
+            ]
+        },
+        "variable_declaration":  {
+            "match": "([a-zA-Z_]\\w*)\\s*:\\s*(?:(.*)\\s*(?:=|:)|(.+);)",
+            "captures": {
+                "1": {
+                    "name": "meta.variable.identifier.jai"
+                },
+                "2": {
+                    "patterns": [
+                        {
+                            "include": "#type"
+                        }
+                    ]
+                },
+                "3": {
+                    "patterns": [
+                        {
+                            "include": "#type"
+                        }
+                    ]
+                }
+            }
+        },
+        "keywords": {
+            "match": "\\b(cast|using|if|else|while|for|return|continue|break|remove|it|SOA|AOS|inline|no_inline)\\b",
+            "name": "keyword.control.jai"
+        },
+        "built_in_types": {
+            "patterns": [
+                {
+                    "match": "\\b(s8|s16|s32|s64|u8|u16|u32|u64|float32|float64|int|float|bool|void)\\b",
+                    "name": "storage.type.jai"
+                }
+            ]
+        },
+        "type": {
+            "match": "(?:\\*\\s*|\\[\\s*(?:\\.\\.|\\d*)\\s*\\]\\s*)*(?:(.*(?:\\s*->\\s*.*)?)|([a-zA-Z_]\\w*))",
+            "captures": {
+                "1": {
+                    "patterns": [
+                    ]
+                },
+                "2": {
+                    "patterns": [
+                        {
+                            "include": "#built_in_types"
+                        },
+                        {
+                            "match": "[a-zA-Z_]\\w*",
+                            "name": "entity.name.type.jai"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
