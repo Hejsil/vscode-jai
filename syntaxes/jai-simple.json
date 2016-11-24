@@ -1,0 +1,123 @@
+{
+    "scopeName": "source.jai",
+    "name": "Jai",
+    "fileTypes": [
+        "jai"
+    ],
+    "foldingStartMarker": "^\\s*/\\*|^(?![^{]*?//|[^{]*?/\\*(?!.*?\\*/.*?\\{)).*?\\{\\s*($|//|/\\*(?!.*?\\*/.*\\S))",
+    "foldingStopMarker": "^\\s*\\*/|^\\s*\\}",
+    "patterns": [
+        {
+            "include": "#built_in_types"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#variable_declaration"
+        },
+        {
+            "include": "#literals"
+        },
+        {
+            "include": "#directives"
+        },
+        {
+            "include": "#directives"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "begin": "/\\*",
+                    "captures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.jai"
+                        }
+                    },
+                    "end": "\\*/\\n?",
+                    "name": "comment.block.jai"
+                },
+                {
+                    "begin": "//",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.comment.jai"
+                        }
+                    },
+                    "end": "$\\n?",
+                    "name": "comment.line.double-slash.jai"
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "match": "\\b(cast|using|if|else|while|for|return|continue|break|remove|it|SOA|AOS|inline|no_inline)\\b",
+                    "name": "keyword.control.jai"
+                },
+                {
+                    "match": "\\b(struct|enum)\\b",
+                    "name": "storage.declaration.jai"
+                }
+            ]
+        },
+        "built_in_types": {
+            "match": "\\b(s8|s16|s32|s64|u8|u16|u32|u64|float32|float64|int|float|bool|string|void)\\b",
+            "name": "storage.type.jai"
+        },
+        "variable_declaration":  {
+            "match": "([a-zA-Z_]\\w*)\\s*:",
+            "captures": {
+                "1": {
+                    "name": "meta.variable.identifier.jai"
+                }
+            }
+        },
+        "literals": {
+            "patterns": [
+                {
+                    "match": "\\b(true|false|null)\\b",
+                    "name": "constant.language.jai"
+                },
+                {
+                    "match": "\\b\\d+(\\.\\d+)?\\b",
+                    "name": "constant.numeric.jai"
+                },
+                {
+                    "match": "---",
+                    "name": "constant.language.jai"
+                },
+                {
+                    "name": "string.quoted.double.jai",
+                    "begin": "\"",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.begin.jai"
+                        }
+                    },
+                    "end": "\"",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.jai"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "match": "\\\\.",
+                            "name": "constant.character.escape.jai"
+                        }
+                    ]
+                }
+            ]
+        },
+        "directives": {
+            "match": "#\\w+",
+            "name": "meta.preprocessor.cs"
+        }
+    }
+}

@@ -1,3 +1,6 @@
+#import "Basic"
+#load "Custom_Lib"
+
 Vector3 :: struct {
     x: int;
     y: int;
@@ -56,6 +59,4 @@ main :: () {
     inferred1 := 5;
     inferred2 := 5.0;
     inferred4 := "Hello World";
-
-    
 }

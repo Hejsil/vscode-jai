@@ -1,9 +1,19 @@
 {
     "name": "jai",
     "displayName": "Jai",
-    "description": "",
+    "description": "Jai language integration for VSCode",
     "version": "0.0.1",
     "publisher": "Hejsil",
+    "license": "MIT",
+    "icon": "images/icon.png",
+    "homepage": "https://github.com/Hejsil/vscode-jai",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Hejsil/vscode-jai"
+    },
+    "bugs": {
+        "url": "https://github.com/Hejsil/vscode-jai/issues"
+    },
     "engines": {
         "vscode": "^1.5.0"
     },
@@ -11,27 +21,25 @@
         "Languages"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onLanguage:jai"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "languages": [
             {
                 "id": "jai",
-                "extensions": [
-                    ".jai"
-                ],
                 "aliases": [
                     "Jai"
                 ],
-                "configuration": "./syntaxes/jai.configuration.json"
+                "extensions": [
+                    ".jai"
+                ]
             }
         ],
-        "grammars": [
+        "snippets": [
             {
                 "language": "jai",
-                "scopeName": "source.jai",
-                "path": "./syntaxes/jai.json"
+                "path": "./snippets/jai.json"
             }
         ],
         "commands": [
@@ -42,11 +50,13 @@
         ],
         "jsonValidation": [
             {
-            "fileMatch": "project.json",
-            "url": "http://json.schemastore.org/project"
+                "fileMatch": "project.json",
+                "url": "http://json.schemastore.org/project"
             }
         ]
     },
+    "keybindings": [
+    ],
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
         "compile": "tsc -watch -p ./",

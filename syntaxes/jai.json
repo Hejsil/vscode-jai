@@ -12,7 +12,6 @@
         }
     ],
     "repository": {
-
         "code": {
             "patterns": [
                 {
@@ -22,13 +21,13 @@
                     "include": "#comments"
                 },
                 {
-                    "include": "#procedure_declaration"
-                },
-                {
                     "include": "#struct_declaration"
                 },
                 {
                     "include": "#enum_declaration"
+                },
+                {
+                    "include": "#procedure_declaration"
                 },
                 {
                     "include": "#variable_declaration"
@@ -41,9 +40,16 @@
                 },
                 {
                     "include": "#preprocessor"
+                }
+            ]
+        },
+        "type": {
+            "patterns": [
+                {
+                    "include": "#built_in_types"
                 },
                 {
-                    "include": "#procedure-call"
+                    "include": "#none_built_in_types"
                 }
             ]
         },
@@ -91,11 +97,8 @@
                 }
             ]
         },
-        "procedure_declaration": {
-
-        },
         "struct_declaration": {
-            "begin": "\\s*([a-zA-Z_]\\w*)\\s*:(\\.*):\\s*(struct|SOA\\s*struct|AOS\\s*struct)\\s*{",
+            "begin": "\\s*([a-zA-Z_]\\w*)\\s*:(.*):\\s*(struct|SOA\\s*struct|AOS\\s*struct)\\s*{",
             "beginCaptures": {
                 "1": {
                     "name": "entity.name.type.jai"
@@ -131,12 +134,15 @@
             ]
         },
         "enum_declaration": {
-            "begin": "\\s*([a-zA-Z_]\\w*)\\s*:\\s*:\\s*(enum)\\s*{",
+            "begin": "\\s*([a-zA-Z_]\\w*)\\s*:(.*):\\s*(enum)\\s*{",
             "beginCaptures": {
                 "1": {
                     "name": "entity.name.type.jai"
                 },
                 "2": {
+                    "include": "#type"
+                },
+                "3": {
                     "name": "storage.modifier.jai"
                 }
             },
@@ -149,24 +155,20 @@
             "name": "meta.enum.jai",
             "patterns": [
                 {
-                    "include": "#literals"
+                    "include": "#code"
                 }
             ]
         },
+        "procedure_declaration": {
+            
+        },
         "variable_declaration":  {
-            "match": "([a-zA-Z_]\\w*)\\s*:\\s*(?:(.*)\\s*(?:=|:)|(.+);)",
+            "match": "([a-zA-Z_]\\w*)\\s*:(.*)(?::|=|;)",
             "captures": {
                 "1": {
                     "name": "meta.variable.identifier.jai"
                 },
                 "2": {
-                    "patterns": [
-                        {
-                            "include": "#type"
-                        }
-                    ]
-                },
-                "3": {
                     "patterns": [
                         {
                             "include": "#type"
@@ -180,32 +182,12 @@
             "name": "keyword.control.jai"
         },
         "built_in_types": {
-            "patterns": [
-                {
-                    "match": "\\b(s8|s16|s32|s64|u8|u16|u32|u64|float32|float64|int|float|bool|void)\\b",
-                    "name": "storage.type.jai"
-                }
-            ]
+            "match": "\\b(s8|s16|s32|s64|u8|u16|u32|u64|float32|float64|int|float|bool|string|void)\\b",
+            "name": "storage.type.jai"
         },
-        "type": {
-            "match": "(?:\\*\\s*|\\[\\s*(?:\\.\\.|\\d*)\\s*\\]\\s*)*(?:(.*(?:\\s*->\\s*.*)?)|([a-zA-Z_]\\w*))",
-            "captures": {
-                "1": {
-                    "patterns": [
-                    ]
-                },
-                "2": {
-                    "patterns": [
-                        {
-                            "include": "#built_in_types"
-                        },
-                        {
-                            "match": "[a-zA-Z_]\\w*",
-                            "name": "entity.name.type.jai"
-                        }
-                    ]
-                }
-            }
+        "none_built_in_types": {
+            "match": "\\b[a-zA-Z_]\\w*\\b",
+            "name": "entity.name.type.jai"
         }
     }
 }
